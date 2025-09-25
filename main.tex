@@ -1,4 +1,5 @@
 \input{include/perl-conf.tex}
+\input{include/liksanin.tex}
 \title{Test2: жизнь после Test::More}
 \author{Ликсанин Игорь}
 \position{Backend разработчик,\\АО «Объединенные Цифровые Сети»}
@@ -52,8 +53,39 @@
         \end{itemize}
     \end{itemize}
 \end{frame}
+
+% 6
+\begin{frame}[fragile]{Проблема: хрупкость}
+    \begin{itemize}
+        \item \texttt Test::More построен вокруг единого глобального объекта Test::Builder. Весь код тесно связан:\\
+        \inputcode{Perl}{snippets/001.pl}\\
+        Проблема: Невозможно изолировать части тестов или создать независимые тестовые контексты.
     \end{itemize}
 \end{frame}
+
+% 7
+\begin{frame}[fragile]{Проблема: хрупкость}
+    \begin{itemize}
+        \item Расширяющие функционал модули заменяли синглтон \texttt{Test::Builder}\\
+        \inputcode{Perl}{snippets/002.pl}\\
+    \end{itemize}
+    Это одно из первых изменений которое зародило идею создания Test2
+    \slidefoot{Подробнее: \url{https://perldoc.perl.org/Test2::Transition}}
+\end{frame}
+
+% 8
+\begin{frame}[fragile]{Проблема: хрупкость}
+    \centering
+    \hspace{0.5cm}
+    \includegraphics[height=\textheight]{snippets/format.jpg}
+    \slidefoot{Подробнее: \url{https://github.com/tokuhirom/Test-Pretty/issues/25}}
+\end{frame}
+
+% 9
+\begin{frame}[fragile]{Проблема: утечки памяти}
+    \inputcode{Perl}{snippets/003.pl}
+\end{frame}
+
 
 \begin{frame}[fragile]{TODO}
     \begin{enumerate}
