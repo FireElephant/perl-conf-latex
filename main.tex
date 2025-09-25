@@ -27,11 +27,31 @@
 }
 
 \begin{frame}[fragile]{Test::More — заслуженный ветеран}
-    \begin{itemize}\setlength\itemsep{1ex}
-        \item Сделал тестирование простым: интуитивный синтаксис (is, ok, like), который знает каждый Perl-разработчик.
-        \item Построен на \texttt{Test::Builder} и выдаёт TAP. Де-факто стандарт годами.
-        \item Простая процедурная модель: один глобальный рантайм, общий счётчик тестов.
-        \item Создал экосистему: стал основой для многих модулей на CPAN (\texttt{Test::Deep}, \texttt{Test::Exception}, \texttt{Test::MockModule} и др.).
+    \begin{itemize}\setlength\itemsep{1.2ex}
+        \item Появился в 2001 году
+        \item Стандарт де-факто для Perl-тестирования
+        \vspace{0.25em}
+        \begin{itemize}
+            \setlength{\itemsep}{0.5ex}
+            \item Входит в ядро Perl (с версии 5.6.2)
+            \item Множество тестов написаны на нём
+        \end{itemize}
+        \item Простой и понятный API
+        \vspace{0.25em}
+        \begin{itemize}
+            \setlength{\itemsep}{0.5ex}
+            \item \texttt{ok(), is(), like(), done\_testing()}
+            \item Легко освоить новичкам
+        \end{itemize}
+        \item Покрывает 80\% потребностей
+        \vspace{0.25em}
+        \begin{itemize}
+            \setlength{\itemsep}{0.5ex}
+            \item Базовые проверки
+            \item Для сложных сценариев требуются дополнительные модули (\texttt{Test::Deep, Test::MockObject} и т.д.)
+        \end{itemize}
+    \end{itemize}
+\end{frame}
     \end{itemize}
 \end{frame}
 
