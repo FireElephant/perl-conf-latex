@@ -1,2 +1,0 @@
-$ LD_LIBRARY_PATH=$PWD/../foo ./bar
-japh,

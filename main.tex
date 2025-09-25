@@ -1,219 +1,44 @@
 \input{include/perl-conf.tex}
-\title{Описание typemap для передачи структур в XS}
-\author{Ступницкий Иван}
-\position{Инженер, YADRO}
+\title{Test2: жизнь после Test::More}
+\author{Ликсанин Игорь}
+\position{Backend разработчик,\\АО «Объединенные Цифровые Сети»}
 \begin{document}
 \titleframe
 
 % Plan
 \begin{frame}[fragile]{О чём расскажу}
     \begin{enumerate}
-        \item Кто я
-        \item Как переводится название доклада
-        \item Подопытная библиотека
-        \item XS в двух словах
-        \item В чём вообще проблема
-        \item Способы передачи структур в XS
-        \item Передача структур из XS в Perl
-        \item Как и что в итоге использовать
+        \item TODO
     \end{enumerate}
 \end{frame}
 
 % Author frame
 \authorframe{
+  {\small
     \begin{itemize}
-        \item Два года программирую\\ на Perl за деньги\\~
-        \item Увлекаюсь информационной безопасностью и сложными системами
+        \vspace{-\baselineskip} % убрать лишний зазор сверху
+        \item 8 лет в Perl: 4 года full-stack,\\ 4 года только backend
+        \item Перешёл в разработку из тестирования
+        \item Контакты:\\
+            \hspace*{1em}Telegram: \texttt{@iliksanin}\\
+            \hspace*{1em}Email: \texttt{i.liksanin@mail.ru}
     \end{itemize}
+  }
 }
 
-\begin{frame}[fragile]{Как переводится название доклада}
-    \centering
-    \hspace{0.5cm}
-    \includegraphics[height=\textheight]{snippets/xs-compilation-scheme.png}
-\end{frame}
-
-\begin{frame}[fragile]{Подопытная библиотека libfoo}
-    \inputcode{C}{snippets/foo-simple.c}
-    \par\vspace{0.5cm}
-    \inputcode{C}{snippets/foo-simple.h}
-\end{frame}
-
-\begin{frame}[fragile]{Вызов libfoo из Си}
-    \inputcode{C}{snippets/bar-simple.c}
-    \par\vspace{0.5cm}
-    \inputcode{txt}{snippets/bar-output.txt}
-\end{frame}
-
-\begin{frame}[fragile]{Что почитать про XS}
-    \begin{itemize}
-        \item \texttt{perlxstut}
-        \item \texttt{perlxs}
-        \item \texttt{perlguts}
-        \item \texttt{perlapi}
-        \item \texttt{perlxstypemap}
+\begin{frame}[fragile]{Test::More — заслуженный ветеран}
+    \begin{itemize}\setlength\itemsep{1ex}
+        \item Сделал тестирование простым: интуитивный синтаксис (is, ok, like), который знает каждый Perl-разработчик.
+        \item Построен на \texttt{Test::Builder} и выдаёт TAP. Де-факто стандарт годами.
+        \item Простая процедурная модель: один глобальный рантайм, общий счётчик тестов.
+        \item Создал экосистему: стал основой для многих модулей на CPAN (\texttt{Test::Deep}, \texttt{Test::Exception}, \texttt{Test::MockModule} и др.).
     \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]{XS в двух словах}
-    \only<1>{
-        \inputcode{txt}{snippets/xs-quick-start.txt}
-    }
-    \only<2>{
-        \inputcode{txt}{snippets/xs-quick-start-comments.txt}
-    }
-\end{frame}
-
-\begin{frame}[fragile]{Основной модуль}
-    \inputcode{Perl}{snippets/xs-basic-lib.pl}
-\end{frame}
-
-\begin{frame}[fragile]{Mytest.xs}
-    \inputcode{XS}{snippets/Mytest.xs}
-\end{frame}
-
-\begin{frame}[fragile]{Вызов libfoo из XS}
-    \inputcode{XS}{snippets/xs-1.xs}
-\end{frame}
-
-\begin{frame}[fragile]{Makefile.PL}
-    \only<1>{
-        \inputcode{Perl}{snippets/Makefile.PL}
-    }
-    \only<2>{
-        \inputcode{Perl}{snippets/Makefile-1.PL}
-    }
-\end{frame}
-
-\begin{frame}[fragile]{Тестирование}
-    \inputcode{Perl}{snippets/test-1.pl}
-
-    \onslide<2->{
-        \vspace{0.5cm}
-        \inputcode{txt}{snippets/out-1.txt}
-    }
-\end{frame}
-
-\begin{frame}[fragile]{Структура в libfoo}
-    \inputcode{C}{snippets/foo-struct.c}
-
-    \onslide<2->{
-        \vspace{0.5cm}
-        \inputcode{C}{snippets/foo-struct.h}
-    }
-\end{frame}
-
-\begin{frame}[fragile]{Вот и всё!\onslide<4->{ (нет)}}
-    \inputcode{XS}{snippets/xs-2.xs}
-
-    \onslide<2->{
-        \vspace{0.5cm}
-        \inputcode{Perl}{snippets/test-2.pl}
-    }
-
-    \onslide<3->{
-        \vspace{0.5cm}
-        \inputcode{txt}{snippets/out-2.txt}
-    }
-\end{frame}
-
-\begin{frame}[fragile]{В XS нужно проще}
-    \inputcode{XS}{snippets/xs-1a.xs}
-
-    \onslide<2->{
-        \vspace{0.5cm}
-        \inputcode{Perl}{snippets/test-1a.pl}
-    }
-
-    \onslide<3->{
-        \vspace{0.5cm}
-        \inputcode{txt}{snippets/out-1.txt}
-    }
-\end{frame}
-
-\begin{frame}[fragile]{А теперь со структурой}
-    \inputcode{XS}{snippets/xs-3.xs}
-
-    \onslide<2->{
-        \vspace{0.25cm}
-        \inputcode{txt}{snippets/out-3.txt}
-    }
-\end{frame}
-
-\begin{frame}[fragile]{Что такое typemap}
-    TODO % TODO
-\end{frame}
-
-\begin{frame}[fragile]{T\_PACKED}
-    \inputcode{XStypemap}{snippets/typemap-4}
-
-    \onslide<2->{
-        \vspace{0.5cm}
-        \inputcode{XS}{snippets/xs-4.xs}
-    }
-\end{frame}
-
-\begin{frame}[fragile]{T\_PACKED fuckup}
-    \inputcode{txt}{snippets/out-4.txt}
-\end{frame}
-
-\begin{frame}[fragile]{Фикс для T\_PACKED}
-    \inputcode{XStypemap}{snippets/typemap-4a}
-
-    \onslide<2->{
-        \vspace{0.5cm}
-        \inputcode{txt}{snippets/out-4a.txt}
-    }
-\end{frame}
-
-\begin{frame}[fragile]{Как это выглядит в Си}
-    \inputcode{C}{snippets/xs-4.c}
-\end{frame}
-
-\begin{frame}[fragile]{Избежать вызова функции}
-    \inputcode{XStypemap}{snippets/typemap-5}
-
-    \onslide<2->{
-        \vspace{0.5cm}
-        \inputcode{txt}{snippets/out-5.txt}
-    }
-\end{frame}
-
-\begin{frame}[fragile]{А теперь без хардкода}
-    \inputcode{XStypemap}{snippets/typemap-6}
-
-    \onslide<2->{
-        \vspace{0.5cm}
-        \inputcode{Perl}{snippets/test-6.pl}
-    }
-
-    \onslide<3->{
-        \vspace{0.5cm}
-        \inputcode{txt}{snippets/out-6.txt}
-    }
-\end{frame}
-
-% TODO надо ещё про OUTPUT рассказать
-
-\begin{frame}[fragile]{Финальный typemap [1]}
-    \inputcode{XStypemap}{snippets/typemap-final-1}
-\end{frame}
-
-\begin{frame}[fragile]{Финальный typemap [2]}
-    \inputcode{XStypemap}{snippets/typemap-final-2}
-\end{frame}
-
-\begin{frame}[fragile]{Финальный typemap [3]}
-    \inputcode{Perl}{snippets/test-final.pl}
-
-    \onslide<2->{
-        \vspace{0.5cm}
-        \inputcode{txt}{snippets/out-final.txt}
-    }
-\end{frame}
-
-\begin{frame}[fragile]{Выводы}
-    TODO % TODO
+\begin{frame}[fragile]{TODO}
+    \begin{enumerate}
+        \item TODO
+    \end{enumerate}
 \end{frame}
 
 \finalframe

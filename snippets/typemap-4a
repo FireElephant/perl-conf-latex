@@ -1,6 +1,0 @@
-struct foo          T_PACKED_PATCHED
-
-INPUT
-T_PACKED_PATCHED
-    # $var = XS_unpack_$ntype($arg)
-    $var = XS_unpack_${(my $nt = $ntype) =~ s/\s/_/g; \$nt}($arg)

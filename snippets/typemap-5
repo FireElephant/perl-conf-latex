@@ -1,6 +1,0 @@
-struct foo          T_STRUCT_FOO
-
-INPUT
-T_STRUCT_FOO
-    $var.number = 777;
-    $var.string = \"this too\\n\";

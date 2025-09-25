@@ -1,6 +1,0 @@
-$ perl Makefile.PL
-...
-$ make
-...
-$ perl test.pl
-japh,

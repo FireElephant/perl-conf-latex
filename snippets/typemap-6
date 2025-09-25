@@ -1,8 +1,0 @@
-struct foo          T_STRUCT_FOO
-
-INPUT
-T_STRUCT_FOO
-    $var.number = SvIV(*hv_fetchs((HV*)SvRV($arg),
-        \"number\", FALSE));
-    $var.string = SvPV_nolen(*hv_fetchs((HV*)SvRV($arg),
-        \"string\", FALSE));
