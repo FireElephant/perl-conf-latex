@@ -1,0 +1,7 @@
+# Seeded srand with seed '20250926' from local date.
+ok 1 - An example subtest {
+    ok 1 - pass
+    ok 2 - ok
+    1..2
+}
+1..1

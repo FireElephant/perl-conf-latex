@@ -1,0 +1,3 @@
+ok 1 - MyClass->can(...)
+ok 2 - An object of class 'MyClass' isa 'MyClass'
+1..2

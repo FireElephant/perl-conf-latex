@@ -1,0 +1,6 @@
+# Subtest: An example subtest
+    ok 1 - pass
+    ok 2 - ok
+    1..2
+ok 1 - An example subtest
+1..1
