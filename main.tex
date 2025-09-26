@@ -147,7 +147,46 @@
 
 \begin{frame}[fragile]{Test2 - революция или эволюция?}
     \begin{itemize}
-        \item Революция в архитектуре, эволюция в использовании
+        \item \textbf{Эволюция в использовании}
+        \begin{itemize}
+            \item Совместимость: \texttt{Test::Builder} теперь слой над \texttt{Test2}
+            \item Привычные \texttt{ok/is/like/subtest} есть в \texttt{Test2::V0}
+            \item Улучшения "из коробки": красивый \texttt{Compare} с таблицами, \texttt{Subtest} с буферизацией
+        \end{itemize}
+
+        \item \textbf{Революция в архитектуре}
+        \begin{itemize}
+            \item События вместо глобального состояния
+            \item Плагины могут безопасно модифицировать поведение
+            \item Легко создавать библиотеки не опасаясь сломать чужой код
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Что такое \texttt{Test2}}
+    \begin{itemize}
+        \item \texttt{Test2} - это фреймворк для написания тестовых инструментов
+        \item Упрощает написание собственных расширений
+        \item Предоставляет множество инструментов из коробки \texttt{Test2::Suite}
+    \end{itemize}
+    \slidefoot{Подробнее: \url{https://perldoc.perl.org/Test2::Suite}}
+\end{frame}
+
+
+\begin{frame}[fragile]{А что будет с \texttt{Test::Builder}?}
+    \begin{itemize}
+        \item Сейчас \texttt{Test::Builder} - совместимый слой поверх \texttt{Test2}
+        \item В таком виде с 10 мая 2016 года
+        \item Можно смешивать инструменты из \texttt{Test::Builder} и \texttt{Test2}
+        \item Вероятно он так и останется для совместимости со старым кодом
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{\texttt{Test2::Suite}}
+    \begin{itemize}
+        \item Начиная с \texttt{Perl 5.40} \texttt{Test2::Suite} входит в core
+        \item Вскоре \texttt{Test2::Suite} также будет объединён с дистрибутивом \texttt{Test-Simple}
+        \item Уже сейчас можно использовать в модулях ядра (со слов автора \texttt{Test2})
     \end{itemize}
 \end{frame}
 
