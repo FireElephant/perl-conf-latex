@@ -1,16 +1,18 @@
-# Миллионами в Test::More в рамках файла тесты лучше не гонять :)
-for my $i (1 .. 1_000_000) {
-    ok(1, "test $_");
-    if ( $i == 1 || $i % 200_000 == 0 ) {
-        show_mem();
-    }
-}
-#            Test::More                    Test2::V0;         
-# tests   RSS     HWM     VMS      # tests   RSS    HWM     VMS
-#        (MiB)   (MiB)   (MiB)              (MiB)  (MiB)  (MiB)
-#     1   11.1    11.1    16.6     #     1   15.2   15.2   20.4
-#  200k  121.9   121.9   127.3     #  200k   15.2   15.2   20.4
-#  400k  232.8   232.8   238.1     #  400k   15.2   15.2   20.4
-#  600k  343.2   343.2   348.6     #  600k   15.2   15.2   20.4
-#  800k  454.6   454.6   459.9     #  800k   15.2   15.2   20.4
-# 1000k  565.0   565.0   570.4     # 1000k   15.2   15.2   20.4
+package MyResponse;
+sub new { bless { code => $_[1] }, $_[0] };
+sub code { $_[0]->{code} }; 1;
+
+package MyAssert;
+use Test::More;
+sub is_http_200 {
+    # local $Test::Builder::Level = $Test::Builder::Level + 1;
+    Test::More::ok( $_[0]->code == 200, $_[1] );
+}; 1;
+
+use open qw(:std :utf8);
+use Test::More;
+
+MyAssert::is_http_200( MyResponse->new(500), 'home' );
+done_testing();
+#   Failed test 'home'
+#   at script.pl line 9.

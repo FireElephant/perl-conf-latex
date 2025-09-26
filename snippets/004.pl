@@ -1,13 +1,17 @@
-# Set the mode BEFORE anything loads Test::Builder
-use open ':std', ':encoding(utf8)';
+package HelperA;
 use Test::More;
+sub init { Test::More->builder->no_diag(1) }  # меняет глобал
+1;
+package HelperB;
+use Test::More;
+sub init { diag 'я ожидал diag'; } # поведение уже изменено
+1;
 
-# OR
-# Modify the filehandles
-my $builder = Test::More->builder;
-binmode $builder->output,         ":encoding(utf8)";
-binmode $builder->failure_output, ":encoding(utf8)";
-binmode $builder->todo_output,    ":encoding(utf8)";
-
-# OR (if Test::Builder used Test2)
-use Test2::Plugin::UTF8;
+package main;
+use Test::More;
+HelperA::init();
+HelperB::init();
+ok 1;
+done_testing();
+# ok 1
+# 1..1

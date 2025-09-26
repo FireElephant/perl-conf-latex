@@ -63,7 +63,6 @@
     \end{itemize}
 \end{frame}
 
-% 7
 \begin{frame}[fragile]{Проблема: хрупкость}
     \begin{itemize}
         \item Расширяющие функционал модули заменяли синглтон \texttt{Test::Builder}\\
@@ -73,7 +72,6 @@
     \slidefoot{Подробнее: \url{https://perldoc.perl.org/Test2::Transition}}
 \end{frame}
 
-% 8
 \begin{frame}[fragile]{Проблема: хрупкость}
     \centering
     \hspace{0.5cm}
@@ -81,17 +79,39 @@
     \slidefoot{Подробнее: \url{https://github.com/tokuhirom/Test-Pretty/issues/25}}
 \end{frame}
 
-% 9
-\begin{frame}[fragile]{Проблема: утечки памяти}
+\begin{frame}[fragile]{Проблема: хрупкость}
     \inputcode{Perl}{snippets/003.pl}
 \end{frame}
 
-% 10
-\begin{frame}[fragile]{Неудобство: UTF8}
+\begin{frame}[fragile]{Проблема: хрупкость}
+    \inputcode{Perl}{snippets/004.pl}
+\end{frame}
+
+\begin{frame}[fragile]{Проблема: утечки памяти}
+    \inputcode{Perl}{snippets/005.pl}
+\end{frame}
+
+\begin{frame}[fragile]{Неудобства: UTF8}
     \begin{itemize}
         \item При использовании utf8 с \texttt{Test::More} нужно не забывать сделать это с уважением\\
     \end{itemize}
-    \inputcode{Perl}{snippets/004.pl}
+    \inputcode{Perl}{snippets/006.pl}
+\end{frame}
+
+\begin{frame}[fragile]{Неудобства: прочие}
+    \begin{itemize}
+        \item Отсутствие встроенной поддержки моков
+        \item Отсутствие встроенной поддержки тестов исключений и предупреждений
+        \item Отсутвие встроенной поддержки гибкого глубокого сравнения
+        \item Перемешивание в TAP строк детей при форках
+        \item Рекомендации в документации по \texttt{Test::More} не использовать \texttt{Test::More} :)
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Test2 - революция или эволюция?}
+    \begin{itemize}
+        \item Революция в архитектуре, эволюция в использовании
+    \end{itemize}
 \end{frame}
 
 
