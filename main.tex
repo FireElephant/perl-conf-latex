@@ -27,6 +27,44 @@
   }
 }
 
+\begin{frame}[fragile]{Краткая история тестирования в Perl}
+    \begin{itemize}
+        \item Был изобретён TAP (\textit{Test Anything Protocol}).
+        \item Разработчики вручную писали строки вывода, например: \texttt{print "ok - Test passed\textbackslash n";}.
+        \item Появились подпрограммы для автоматизации: \texttt{ok()} и подобные.
+        \item Стали появляться библиотеки объединиящие такие функции.
+        \item Возникали проблемы из-за их несовместимости.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Краткая история тестирования в Perl}
+    \begin{itemize}
+        \item Michael Schwern выпустил \texttt{Test::Builder} как совместимую основу, породив экосистему \texttt{Test::Builder}.
+        \item Schwern и другие пытались переработать \texttt{Test::Builder} для исправления недостатков, но проект закрыли.
+        \item Chad Granum выпустил \texttt{Test2} и обновил \texttt{Test::Builder}, превратив его в совместимый слой поверх \texttt{Test2}.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Экосистема \texttt{Test::Builder}}
+    \begin{itemize}
+        \item \texttt{Test::Builder} - первая удачная попытка создать базу, на которой можно строить совместимые тестовые инструменты.
+        \item \texttt{Test::Builder} привёл к бурному росту инструментов тестирования, которые надёжно работали вместе.
+        \item Это была первая тестовая экосистема Perl.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Экосистема \texttt{Test::Builder}}
+    \begin{itemize}
+        \item По мере её развития выявились изъяны и ограничения:
+        \begin{itemize}
+            \item Реализовать по-настоящему полезный \texttt{DieOnFail} почти невозможно.
+            \item Проверка тестовых инструментов сводится к перехвату и валидации вывода \texttt{TAP}.
+            \item Очень мало хуков для поведения, выходящего за рамки текстового вывода.
+            \item \textit{Subtests} возможны и реализованы, но внутренности, делающие их рабочими, пугающе сложны и хрупки.
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
 \begin{frame}[fragile]{Test::More — заслуженный ветеран}
     \begin{itemize}\setlength\itemsep{1.2ex}
         \item Появился в 2001 году
@@ -54,8 +92,7 @@
     \end{itemize}
 \end{frame}
 
-% 6
-\begin{frame}[fragile]{Проблема: хрупкость}
+\begin{frame}[fragile]{Проблемы Test::More: хрупкость}
     \begin{itemize}
         \item \texttt Test::More построен вокруг единого глобального объекта Test::Builder. Весь код тесно связан:\\
         \inputcode{Perl}{snippets/001.pl}\\
@@ -63,7 +100,7 @@
     \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]{Проблема: хрупкость}
+\begin{frame}[fragile]{Проблемы Test::More: хрупкость}
     \begin{itemize}
         \item Расширяющие функционал модули заменяли синглтон \texttt{Test::Builder}\\
         \inputcode{Perl}{snippets/002.pl}\\
@@ -72,33 +109,33 @@
     \slidefoot{Подробнее: \url{https://perldoc.perl.org/Test2::Transition}}
 \end{frame}
 
-\begin{frame}[fragile]{Проблема: хрупкость}
+\begin{frame}[fragile]{Проблемы Test::More: хрупкость}
     \centering
     \hspace{0.5cm}
     \includegraphics[height=\textheight]{snippets/format.jpg}
     \slidefoot{Подробнее: \url{https://github.com/tokuhirom/Test-Pretty/issues/25}}
 \end{frame}
 
-\begin{frame}[fragile]{Проблема: хрупкость}
+\begin{frame}[fragile]{Проблемы Test::More: хрупкость}
     \inputcode{Perl}{snippets/003.pl}
 \end{frame}
 
-\begin{frame}[fragile]{Проблема: хрупкость}
+\begin{frame}[fragile]{Проблемы Test::More:: хрупкость}
     \inputcode{Perl}{snippets/004.pl}
 \end{frame}
 
-\begin{frame}[fragile]{Проблема: утечки памяти}
+\begin{frame}[fragile]{Проблемы Test::More: утечки памяти}
     \inputcode{Perl}{snippets/005.pl}
 \end{frame}
 
-\begin{frame}[fragile]{Неудобства: UTF8}
+\begin{frame}[fragile]{Неудобства Test::More: UTF8}
     \begin{itemize}
         \item При использовании utf8 с \texttt{Test::More} нужно не забывать сделать это с уважением\\
     \end{itemize}
     \inputcode{Perl}{snippets/006.pl}
 \end{frame}
 
-\begin{frame}[fragile]{Неудобства: прочие}
+\begin{frame}[fragile]{Неудобства Test::More: прочие}
     \begin{itemize}
         \item Отсутствие встроенной поддержки моков
         \item Отсутствие встроенной поддержки тестов исключений и предупреждений
