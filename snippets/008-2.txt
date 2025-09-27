@@ -1,4 +1,3 @@
-# Seeded srand with seed '20250926' from local date.
 ok 1 - MyClass=HASH->can(...)
 ok 2 - MyClass=HASH->isa('MyClass')
 1..2

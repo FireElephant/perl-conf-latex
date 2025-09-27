@@ -9,7 +9,19 @@
 % Plan
 \begin{frame}[fragile]{О чём расскажу}
     \begin{enumerate}
-        \item TODO
+        \item Кто я
+        \vspace{0.25em}
+        \item История тестирования в Perl и появление Test::More
+        \vspace{0.25em}
+        \item Проблемы и ограничения Test::More
+        \vspace{0.25em}
+        \item Что такое Test2 и зачем он нужен
+        \vspace{0.25em}
+        \item Совместимость Test2 с существующим кодом
+        \vspace{0.25em}
+        \item Практические примеры использования Test2
+        \vspace{0.25em}
+        \item Выводы: стоит ли переходить на Test2
     \end{enumerate}
 \end{frame}
 
@@ -29,43 +41,29 @@
 
 \begin{frame}[fragile]{Краткая история тестирования в Perl}
     \begin{itemize}
-        \item Был изобретён TAP (\textit{Test Anything Protocol}).
-        \item Разработчики вручную писали строки вывода, например: \texttt{print "ok - Test passed\textbackslash n";}.
-        \item Появились подпрограммы для автоматизации: \texttt{ok()} и подобные.
-        \item Стали появляться библиотеки объединиящие такие функции.
-        \item Возникали проблемы из-за их несовместимости.
+        \item Для perl был разработан TAP (\textit{Test Anything Protocol})
+        \vspace{0.25em}
+        \item Разработчики вручную писали строки вывода, например: \texttt{print "ok - Test passed\textbackslash n";}
+        \vspace{0.25em}
+        \item Появились подпрограммы для автоматизации: \texttt{ok()} и подобные
+        \vspace{0.25em}
+        \item Стали появляться библиотеки объединиящие такие функции
+        \vspace{0.25em}
+        \item Возникали проблемы из-за их несовместимости
     \end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]{Краткая история тестирования в Perl}
     \begin{itemize}
-        \item Michael Schwern выпустил \texttt{Test::Builder} как совместимую основу, породив экосистему \texttt{Test::Builder}.
-        \item Schwern и другие пытались переработать \texttt{Test::Builder} для исправления недостатков, но проект закрыли.
-        \item Chad Granum выпустил \texttt{Test2} и обновил \texttt{Test::Builder}, превратив его в совместимый слой поверх \texttt{Test2}.
+        \item Michael Schwern выпустил \texttt{Test::Builder} как совместимую основу, породив экосистему \texttt{Test::Builder}
+        \vspace{0.25em}
+        \item Schwern и другие пытались переработать \texttt{Test::Builder} для исправления недостатков, но проект закрыли
+        \vspace{0.25em}
+        \item Chad Granum выпустил \texttt{Test2} и обновил \texttt{Test::Builder}, превратив его в совместимый слой поверх \texttt{Test2}
     \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]{Экосистема \texttt{Test::Builder}}
-    \begin{itemize}
-        \item \texttt{Test::Builder} - первая удачная попытка создать базу, на которой можно строить совместимые тестовые инструменты.
-        \item \texttt{Test::Builder} привёл к бурному росту инструментов тестирования, которые надёжно работали вместе.
-        \item Это была первая тестовая экосистема Perl.
-    \end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]{Экосистема \texttt{Test::Builder}}
-    \begin{itemize}
-        \item По мере её развития выявились изъяны и ограничения:
-        \begin{itemize}
-            \item Реализовать по-настоящему полезный \texttt{DieOnFail} почти невозможно.
-            \item Проверка тестовых инструментов сводится к перехвату и валидации вывода \texttt{TAP}.
-            \item Очень мало хуков для поведения, выходящего за рамки текстового вывода.
-            \item \textit{Subtests} возможны и реализованы, но внутренности, делающие их рабочими, пугающе сложны и хрупки.
-        \end{itemize}
-    \end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]{Test::More — заслуженный ветеран}
+\begin{frame}[fragile]{Test::More - заслуженный ветеран}
     \begin{itemize}\setlength\itemsep{1.2ex}
         \item Появился в 2001 году
         \item Стандарт де-факто для Perl-тестирования
@@ -92,57 +90,59 @@
     \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]{Проблемы Test::More: хрупкость}
-    \begin{itemize}
-        \item \texttt Test::More построен вокруг единого глобального объекта Test::Builder. Весь код тесно связан:\\
-        \inputcode{Perl}{snippets/001.pl}\\
-        Проблема: Невозможно изолировать части тестов или создать независимые тестовые контексты.
-    \end{itemize}
+\begin{frame}[fragile]{Проблемы Test::More}
+    \only<1>{
+        \begin{itemize}
+            \item \texttt Test::More построен вокруг единого глобального объекта Test::Builder. Весь код тесно связан:\\
+            \vspace{0.25em}
+            \inputcode{Perl}{snippets/001.pl}\\
+            \vspace{0.5em}
+            Проблема: невозможно изолировать части тестов или создать независимые тестовые контексты.
+        \end{itemize}
+    }
+    \only<2>{
+        \begin{itemize}
+            \item Расширяющие функционал модули заменяли синглтон \texttt{Test::Builder}\\
+            \inputcode{Perl}{snippets/002.pl}\\
+        \end{itemize}
+        \vspace{0.5em}
+        \slidefoot{Подробнее: \url{https://perldoc.perl.org/Test2::Transition}}
+    }
+    \only<3>{
+        \centering
+        \hspace{0.5cm}
+        \includegraphics[height=\textheight]{snippets/format.jpg}
+        \slidefoot{Подробнее: \url{https://github.com/tokuhirom/Test-Pretty/issues/25}}
+    }
+    \only<4>{
+        \inputcode{Perl}{snippets/003.pl}
+    }
+    \only<5>{
+        \inputcode{Perl}{snippets/004.pl}
+    }
+    \only<6>{
+        \inputcode{Perl}{snippets/005.pl}
+    }
 \end{frame}
 
-\begin{frame}[fragile]{Проблемы Test::More: хрупкость}
-    \begin{itemize}
-        \item Расширяющие функционал модули заменяли синглтон \texttt{Test::Builder}\\
-        \inputcode{Perl}{snippets/002.pl}\\
-    \end{itemize}
-    Это одно из первых изменений которое зародило идею создания Test2
-    \slidefoot{Подробнее: \url{https://perldoc.perl.org/Test2::Transition}}
-\end{frame}
-
-\begin{frame}[fragile]{Проблемы Test::More: хрупкость}
-    \centering
-    \hspace{0.5cm}
-    \includegraphics[height=\textheight]{snippets/format.jpg}
-    \slidefoot{Подробнее: \url{https://github.com/tokuhirom/Test-Pretty/issues/25}}
-\end{frame}
-
-\begin{frame}[fragile]{Проблемы Test::More: хрупкость}
-    \inputcode{Perl}{snippets/003.pl}
-\end{frame}
-
-\begin{frame}[fragile]{Проблемы Test::More:: хрупкость}
-    \inputcode{Perl}{snippets/004.pl}
-\end{frame}
-
-\begin{frame}[fragile]{Проблемы Test::More: утечки памяти}
-    \inputcode{Perl}{snippets/005.pl}
-\end{frame}
-
-\begin{frame}[fragile]{Неудобства Test::More: UTF8}
-    \begin{itemize}
-        \item При использовании utf8 с \texttt{Test::More} нужно не забывать сделать это с уважением\\
-    \end{itemize}
-    \inputcode{Perl}{snippets/006.pl}
-\end{frame}
-
-\begin{frame}[fragile]{Неудобства Test::More: прочие}
-    \begin{itemize}
-        \item Отсутствие встроенной поддержки моков
-        \item Отсутствие встроенной поддержки тестов исключений и предупреждений
-        \item Отсутвие встроенной поддержки гибкого глубокого сравнения
-        \item Перемешивание в TAP строк детей при форках
-        \item Рекомендации в документации по \texttt{Test::More} не использовать \texttt{Test::More} :)
-    \end{itemize}
+\begin{frame}[fragile]{Неудобства Test::More}
+    \only<1>{
+        \begin{itemize}
+            \item При использовании utf8 с \texttt{Test::More} нужно не забывать сделать это с уважением\\
+        \end{itemize}
+        \inputcode{Perl}{snippets/006.pl}
+    }
+    \only<2>{
+        \begin{itemize}
+            \item Отсутствие встроенной поддержки моков
+            \vspace{0.25em}
+            \item Отсутствие встроенной поддержки тестов исключений и предупреждений
+            \vspace{0.25em}
+            \item Отсутвие встроенной поддержки гибкого глубокого сравнения
+            \vspace{0.25em}
+            \item Рекомендации в документации по \texttt{Test::More} не использовать \texttt{Test::More} :)
+        \end{itemize}
+    }
 \end{frame}
 
 \begin{frame}[fragile]{Test2 - революция или эволюция?}
@@ -150,14 +150,18 @@
         \item \textbf{Эволюция в использовании}
         \begin{itemize}
             \item Совместимость: \texttt{Test::Builder} теперь слой над \texttt{Test2}
+            \vspace{0.25em}
             \item Привычные \texttt{ok/is/like/subtest} есть в \texttt{Test2::V0}
+            \vspace{0.25em}
             \item Улучшения "из коробки": красивый \texttt{Compare} с таблицами, \texttt{Subtest} с буферизацией
         \end{itemize}
-
+        \vspace{0.5em}
         \item \textbf{Революция в архитектуре}
         \begin{itemize}
             \item События вместо глобального состояния
+            \vspace{0.25em}
             \item Плагины могут безопасно модифицировать поведение
+            \vspace{0.25em}
             \item Легко создавать библиотеки не опасаясь сломать чужой код
         \end{itemize}
     \end{itemize}
@@ -166,18 +170,22 @@
 \begin{frame}[fragile]{Что такое \texttt{Test2}}
     \begin{itemize}
         \item \texttt{Test2} - это фреймворк для написания тестовых инструментов
+        \vspace{0.25em}
         \item Упрощает написание собственных расширений
+        \vspace{0.25em}
         \item Предоставляет множество инструментов из коробки \texttt{Test2::Suite}
     \end{itemize}
     \slidefoot{Подробнее: \url{https://perldoc.perl.org/Test2::Suite}}
 \end{frame}
 
-
 \begin{frame}[fragile]{А что будет с \texttt{Test::Builder}?}
     \begin{itemize}
         \item Сейчас \texttt{Test::Builder} - совместимый слой поверх \texttt{Test2}
+        \vspace{0.25em}
         \item В таком виде с 10 мая 2016 года
+        \vspace{0.25em}
         \item Можно смешивать инструменты из \texttt{Test::Builder} и \texttt{Test2}
+        \vspace{0.25em}
         \item Вероятно он так и останется для совместимости со старым кодом
     \end{itemize}
 \end{frame}
@@ -185,14 +193,15 @@
 \begin{frame}[fragile]{\texttt{Test2::Suite}}
     \begin{itemize}
         \item Начиная с \texttt{Perl 5.40} \texttt{Test2::Suite} входит в core
+        \vspace{0.25em}
         \item Вскоре \texttt{Test2::Suite} также будет объединён с дистрибутивом \texttt{Test-Simple}
+        \vspace{0.25em}
         \item Уже сейчас можно использовать в модулях ядра (со слов автора \texttt{Test2})
     \end{itemize}
-
     \begin{columns}[c]
         \begin{column}{0.30\textwidth}
             \centering
-            \includegraphics[width=0.85\linewidth]{snippets/TPRC-2024.png}
+            \includegraphics[width=0.85\linewidth]{snippets/test2-ecosystem.png}
         \end{column}
         \begin{column}{0.70\textwidth}
             {\small Подробнее про экосистему Test2 от Chad Granum:}\\
@@ -242,13 +251,150 @@
         \end{columns}
     }
 \end{frame}
+
+\begin{frame}[fragile]{\texttt{Глубокие сравнения}}
+    \only<1>{
+        \begin{columns}[T,onlytextwidth]
+            \begin{column}{0.49\textwidth}
+            \inputcode{Perl}{snippets/010.pl}
+            \end{column}
+            \begin{column}{0.49\textwidth}
+            \lstinputlisting{snippets/010-1.txt}
+            \end{column}
+        \end{columns}
+    }
+    \only<2>{
+        \inputcode{Perl}{snippets/011.pl}
+    }
+    \only<3>{
+        \centering
+        \hspace{0.5cm}
+        \includegraphics[height=\textheight]{snippets/2025-09-27-100926.png}
+        \slidefoot{Подробнее: \url{https://metacpan.org/pod/Test2::Tools::Compare}}
+    }
+    \only<4>{
+        \inputcode{Perl}{snippets/012.pl}
+    }
+    \only<5>{
+        \inputcode{Perl}{snippets/013.pl}
+    }
+    \only<6>{
+        \inputcode{Perl}{snippets/014.pl}
+    }
+    \only<7>{
+        \inputcode{Perl}{snippets/015.pl}
+    }
+    \only<8>{
+        \inputcode{Perl}{snippets/016.pl}
+    }
 \end{frame}
 
+\begin{frame}[fragile]{\texttt{Исключения и предупреждения}}
+    \only<1>{
+        \inputcode{Perl}{snippets/017.pl}
+    }
+    \only<2>{
+        \inputcode{Perl}{snippets/018.pl}
+    }
+\end{frame}
 
-\begin{frame}[fragile]{TODO}
-    \begin{enumerate}
-        \item TODO
-    \end{enumerate}
+\begin{frame}[fragile]{\texttt{Моки}}
+    \only<1>{
+        \inputcode{Perl}{snippets/019.pl}
+    }
+    \only<2>{
+        \inputcode{Perl}{snippets/020.pl}
+        \slidefoot{Подробнее: \url{https://metacpan.org/pod/Test2::Mock}}
+    }
+\end{frame}
+
+\begin{frame}[fragile]{\texttt{Прочее}}
+    \only<1>{
+        \begin{itemize}
+            \item \texttt{Test2::Plugin::SRand}
+            \begin{itemize}
+                \item Делает прогоны стабильными, но позволяет тестировать случайное поведение
+                \vspace{0.25em}
+                \item Устанавливает seed равным текущей дате: \texttt{srand("YYYYMMDD")}
+                \vspace{0.25em}
+                \item Seed можно переопределить переменной окружения \texttt{T2\_RAND\_SEED}
+                \vspace{0.25em}
+                \item В подробном режиме или при падении сообщает использованный seed
+                \vspace{0.25em}
+                \item Делает "случайное" поведение воспроизводимым
+                \vspace{0.25em}
+                \item Каждый день свой seed, изменения от "рандома" всё ещё видны
+                \vspace{0.25em}
+                \item Можно выключить поведение:\\ \texttt{use Test2::V0 -no\_srand => 1;}
+            \end{itemize} 
+        \end{itemize}
+        }
+        \only<2>{
+            \begin{itemize}
+                \item \texttt{Test2::Plugin::UTF8}
+                \begin{itemize}
+                    \item "UTF8 везде"
+                    \vspace{0.25em}
+                    \item Импортирует прагму \texttt{utf8} в текущий файл
+                    \vspace{0.25em}
+                    \item Устанавливает \texttt{STDOUT} в \texttt{utf8}
+                    \vspace{0.25em}
+                    \item Устанавливает \texttt{STDERR} в \texttt{utf8}
+                    \vspace{0.25em}
+                    \item Настраивает текущий форматтер на \texttt{UTF8} для всех дескрипторов
+                    \vspace{0.25em}
+                    \item Применяет это во всех форматтерах
+                    \vspace{0.25em}
+                    \item Можно выключить поведение:\\ \texttt{use Test2::V0 -no\_utf8 => 1;}
+            \end{itemize}
+        \end{itemize}
+    }
+\end{frame}
+
+\begin{frame}[fragile]{\texttt{Резюме}}
+    \begin{itemize}
+        \item Для разработчиков приложений: \texttt{Test2::Suite}
+        \begin{itemize}
+            \item \texttt{Test2::V0}: единый импорт и согласованный API
+            \vspace{0.25em}
+            \item Сравнение структур
+            \vspace{0.25em}
+            \item Моки
+            \vspace{0.25em}
+            \item Хелперы: \texttt{warnings}, \texttt{lives}/\texttt{dies} и т.д.
+            \vspace{0.25em}
+            \item Совместимость: \texttt{Test::More} поверх Test2 без боли
+        \end{itemize}
+        \vspace{0.5em}
+        \item Для разработчиков библиотек: \texttt{Test2::API}
+        \begin{itemize}
+            \item Интерфейс для написания тестовых инструментов
+            \vspace{0.25em}
+            \item Без синглтона: изоляция и предсказуемые хуки
+            \vspace{0.25em}
+            \item Стабильные контракты вместо монкипатчинга
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{\texttt{Посмотреть дополнительно}}
+    \centering
+    % Мини-блок для QR: картинка + подпись + ссылка
+    \newcommand{\qrbox}[3]{%
+    \begin{minipage}[t]{0.31\textwidth}
+        \centering
+        \includegraphics[width=0.9\linewidth]{#1}\\[0.4em]
+        \scriptsize \textbf{#2}\\[-0.1em]
+        \url{#3}
+    \end{minipage}
+    }
+
+    \qrbox{snippets/better_testing-test2-suite.png}{Better testing with Test2-Suite}{https://www.youtube.com/watch?v=b2xIfBdcqb0}\hfill
+    \qrbox{snippets/test2-ecosystem.png}{The Test2 Ecosystem}{https://www.youtube.com/watch?v=DdSQkIfeoqU}\hfill
+    \qrbox{snippets/harness}{Test2::Harness – Super charge your test runs}{https://www.youtube.com/watch?v=uyqP6Prsq38}
+
+    \vspace{0.6em}
+    \scriptsize Документация: \url{https://test-more.github.io/Test2-Suite}
 \end{frame}
 
 \finalframe
